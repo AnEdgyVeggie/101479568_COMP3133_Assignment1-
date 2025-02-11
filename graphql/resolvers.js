@@ -1,5 +1,8 @@
 const User = require("../models/User")
 const Employee = require("../models/Employee")
+const bcrypt = require("bcrypt");
+
+// Validation is handled within the Mongoose Schemas
 
 module.exports = {
     Query: {
@@ -8,18 +11,26 @@ module.exports = {
         async user(_, { ID }) { // get single user
             return await User.findById(ID)
         },
+
         async getUsers(_) { // get all users
             return await User.find().sort()
         },
+
         async loginUserEmail(_, {userInput: {email, password}}) {
             const user = await User.findOne({email: email})
             if (!user) return false;
-            return user.password === password
+            let login = await bcrypt.compare(password, user['password'])
+            console.log(login)
+            return login
+            
         },
+
         async loginUserUsername(_, {userInput: {username, password}}) {
             const user = await User.findOne({username: username})
             if (!user) return false;
-            return user.password === password
+            let login = await bcrypt.compare(password, user['password'])
+            console.log(login)
+            return login
         },
 
         // EMPLOYEES //////////////////////////////////////////
@@ -44,22 +55,36 @@ module.exports = {
         // USERS //////////////////////////////////////////////
         ///////////////////////////////////////////////////////
         async createUser(_, {userInput: {username, email, password}}) {
-            // add validation and encryption
-            const createdUser = new User({
-                username: username,
-                email: email,
-                password: password,
-                created_at: new Date().toISOString()
+            const salt = 10
+            const user = await new Promise((resolve, reject) => {
+
+                bcrypt.hash(password, salt, async (error, hashedPass) => {
+                    if (error) {
+                        return {
+                            status: 400,
+                            error: "There was an error in the hashing of the provided password"
+                        }
+                    }
+                    
+                    const createdUser = new User({
+                        username: username,
+                        email: email,
+                        password: hashedPass,
+                        created_at: new Date().toISOString()
+                    })
+                    
+                    resolve(createdUser.save());
+                    
+                })
             })
 
-            const res = await createdUser.save();
-
-            console.log(res._doc)
+            console.log(user)
 
             return {
-                id: res.id,
-                ...res._doc
+                id: user.id,
+                ...user._doc
             }
+
         },
         async deleteUser(_, {ID}) {
             const successfulDelete = (await User.deleteOne({_id: ID})).deletedCount

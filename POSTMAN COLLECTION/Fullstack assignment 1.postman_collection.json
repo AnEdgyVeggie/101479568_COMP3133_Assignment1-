@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "bdc597ef-cdf8-492e-8397-d7990b829fb7",
+		"name": "Fullstack assignment 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20745360"
+	},
+	"item": [
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "QUERIES",
+					"item": [
+						{
+							"name": "GET ALL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetUsers($amount: Int) {\r\n  getUsers(amount: $amount) {\r\n    _id\r\n    username\r\n    email\r\n    password\r\n    created_at\r\n    updated_at\r\n  }\r\n}",
+										"variables": ""
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "GET SINGLE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query User($id: ID!) {\r\n  user(ID: $id) {\r\n    _id\r\n    username\r\n    email\r\n    password\r\n    created_at\r\n    updated_at\r\n  }\r\n}",
+										"variables": "{\r\n  \"id\": \"67aa83cc1483fbc3d7cb0b03\"\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "LOGIN WITH EMAIL PASS",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query Query($userInput: UserLoginEmail) {\r\n  loginUserEmail(userInput: $userInput)\r\n}",
+										"variables": "{\r\n  \"userInput\": {\r\n    \"email\": \"hello@test.com\",\r\n    \"password\": \"hello\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "LOGIN WITH EMAIL FAIL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query Query($userInput: UserLoginEmail) {\r\n  loginUserEmail(userInput: $userInput)\r\n}",
+										"variables": "{\r\n  \"userInput\": {\r\n    \"email\": \"hello@test.com\",\r\n    \"password\": \"wrong password\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "LOGIN WITH USERNAME PASS",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query Query($userInput: UserLoginUsername) {\r\n  loginUserUsername(userInput: $userInput)\r\n}",
+										"variables": "{\r\n  \"userInput\": {\r\n    \"password\": \"hello\",\r\n    \"username\": \"hello\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "LOGIN WITH USERNAME FAIL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query Query($userInput: UserLoginEmail) {\r\n  loginUserEmail(userInput: $userInput)\r\n}",
+										"variables": "{\r\n  \"userInput\": {\r\n    \"password\": \"hello\",\r\n    \"username\": \"wrong password\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "MUTATORS",
+					"item": [
+						{
+							"name": "CREATE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation CreateUser($userInput: UserInput) {\r\n  createUser(userInput: $userInput) {\r\n    _id\r\n    username\r\n    email\r\n    password\r\n    created_at\r\n    updated_at\r\n  }\r\n}",
+										"variables": "{\r\n  \"userInput\": {\r\n    \"email\": \"emailzsz@email.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"testUserszz\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "EDIT",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation EditEmployee($id: ID!, $userInput: UserInput) {\r\n  editUser(ID: $id, userInput: $userInput)\r\n}",
+										"variables": "{\r\n  \"id\": \"67ab898638eaf927c1f4430f\",\r\n  \"userInput\": {\r\n    \"username\": \"Hackerman\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation DeleteUser($id: ID!) {\r\n  deleteUser(ID: $id)\r\n}",
+										"variables": "{\r\n  \"id\": \"67ab97d4676dd7639431a01f\"\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "EMPLOYEES",
+			"item": [
+				{
+					"name": "MUTATORS",
+					"item": [
+						{
+							"name": "CREATE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation CreateEmployee($employeeInput: EmployeeInput) {\r\n  createEmployee(employeeInput: $employeeInput) {\r\n    _id\r\n    first_name\r\n    last_name\r\n    email\r\n    gender\r\n    designation\r\n    salary\r\n    date_of_joining\r\n    department\r\n    employee_photo\r\n    created_at\r\n    updated_at\r\n  }\r\n}",
+										"variables": "{\r\n  \"employeeInput\": {\r\n    \"department\": \"DevOps\",\r\n    \"designation\": \"DevOps Engineer\",\r\n    \"email\": \"devops@employee.ca\",\r\n    \"employee_photo\": \"/pictures/devops\",\r\n    \"first_name\": \"Devon\",\r\n    \"gender\": \"male\",\r\n    \"last_name\": \"Optica\",\r\n    \"salary\": 85000\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "EDIT",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation EditEmployee($id: ID!, $employeeInput: EmployeeInput) {\r\n  editEmployee(ID: $id, employeeInput: $employeeInput)\r\n}",
+										"variables": "{\r\n  \"id\": \"67aa8b8982d4d1eab29b1ee4\",\r\n  \"employeeInput\": {\r\n    \"email\": null,\r\n    \"employee_photo\": \"/pictures/devops2\",\r\n    \"salary\": 110000\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation DeleteEmployee($id: ID!) {\r\n  deleteEmployee(ID: $id)\r\n}",
+										"variables": "{\r\n  \"id\": \"67ab950398d2d0b7cd9d66a5\"\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "QUERIES",
+					"item": [
+						{
+							"name": "GET EMPLOYEES",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetEmployees {\r\n  getEmployees {\r\n    _id\r\n    created_at\r\n    date_of_joining\r\n    department\r\n    designation\r\n    email\r\n    employee_photo\r\n    first_name\r\n    gender\r\n    last_name\r\n    salary\r\n    updated_at\r\n  }\r\n}",
+										"variables": ""
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "GET SINGLE EMPLOYEE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetEmployees($id: ID!) {\r\n  employee(ID: $id) {\r\n    _id\r\n    created_at\r\n    date_of_joining\r\n    department\r\n    designation\r\n    email\r\n    employee_photo\r\n    first_name\r\n    gender\r\n    last_name\r\n    salary\r\n    updated_at\r\n  }\r\n}",
+										"variables": "{\r\n  \"id\": \"67aa86d38cea52e63f5ec1fd\"\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "GET SINGLE EMPLOYEE DEPARTMENT",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetEmployeesDepartment($empDepartment: EmployeeDepartment) {\r\n  getEmployeesDepartment(empDepartment: $empDepartment) {\r\n    _id\r\n    first_name\r\n    last_name\r\n    email\r\n    gender\r\n    designation\r\n    salary\r\n    date_of_joining\r\n    department\r\n    employee_photo\r\n    created_at\r\n    updated_at\r\n  }\r\n}",
+										"variables": "{\r\n  \"empDepartment\": {\r\n    \"department\": \"front end development\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						},
+						{
+							"name": "GET SINGLE EMPLOYEE DESIGNATION",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetEmployeesDepartment($empDesignation: EmployeeDesignation) {\r\n  getEmployeesDesignation(empDesignation: $empDesignation) {\r\n    _id\r\n    first_name\r\n    last_name\r\n    email\r\n    gender\r\n    designation\r\n    salary\r\n    date_of_joining\r\n    department\r\n    employee_photo\r\n    created_at\r\n    updated_at\r\n  }\r\n}",
+										"variables": "{\r\n  \"empDesignation\": {\r\n    \"designation\": \"SWE\"\r\n  }\r\n}"
+									}
+								},
+								"url": "http://localhost:5000/"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
