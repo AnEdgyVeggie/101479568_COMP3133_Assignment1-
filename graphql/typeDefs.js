@@ -74,8 +74,8 @@ input EmployeeDepartment {
 type Query {
     user(ID: ID!): User!
     getUsers(amount: Int): [User]
-    loginUserEmail(userInput: UserLoginEmail): Boolean
-    loginUserUsername(userInput: UserLoginUsername): Boolean
+    loginUserEmail(userInput: UserLoginEmail): String
+    loginUserUsername(userInput: UserLoginUsername): String
 
     employee(ID: ID!): Employee!
     getEmployees(amount: Int): [Employee]
